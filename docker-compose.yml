@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # Redis - Queue and caching
+  redis:
+    image: redis:7-alpine
+    container_name: immobilienscout24-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Coordinator - Property discovery (runs on schedule)
+  coordinator:
+    build: .
+    container_name: immobilienscout24-coordinator
+    command: npm run coordinator
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - CORE_SERVICE_URL=${CORE_SERVICE_URL}
+      - CORE_SERVICE_API_KEY=${CORE_SERVICE_API_KEY}
+      - DEBUG=${DEBUG:-false}
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: "no"  # Use external scheduler (cron, k8s CronJob, etc.)
+
+  # Workers - Process details from queue (scale with replicas)
+  worker:
+    build: .
+    command: npm run worker
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - CORE_SERVICE_URL=${CORE_SERVICE_URL}
+      - CORE_SERVICE_API_KEY=${CORE_SERVICE_API_KEY}
+      - REQUEST_DELAY_MS=${REQUEST_DELAY_MS:-2000}
+      - DEBUG=${DEBUG:-false}
+    depends_on:
+      redis:
+        condition: service_healthy
+    deploy:
+      replicas: 3  # Run 3 workers in parallel
+    restart: unless-stopped
+
+  # Queue Stats Monitor (optional)
+  stats:
+    build: .
+    container_name: immobilienscout24-stats
+    command: npm run queue:stats
+    environment:
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    profiles:
+      - tools  # Only run when explicitly requested
+
+volumes:
+  redis-data:
+    driver: local
+
+networks:
+  default:
+    name: immobilienscout24-network

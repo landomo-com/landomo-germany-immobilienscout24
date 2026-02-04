@@ -8,7 +8,13 @@
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
     "scrape": "ts-node src/index.ts",
-    "example": "ts-node src/example-core-integration.ts"
+    "example": "ts-node src/example-core-integration.ts",
+    "coordinator": "tsx src/coordinator.ts",
+    "worker": "tsx src/worker.ts",
+    "queue:stats": "tsx src/queue-stats.ts stats",
+    "queue:clear": "tsx src/queue-stats.ts clear",
+    "queue:retry-failed": "tsx src/queue-stats.ts retry-failed",
+    "queue:show-failed": "tsx src/queue-stats.ts show-failed"
   },
   "keywords": [
     "scraper",
@@ -20,11 +26,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^1.6.5"
+    "@types/ioredis": "^4.28.10",
+    "axios": "^1.6.5",
+    "dotenv": "^16.0.0",
+    "ioredis": "^5.9.2"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
     "ts-node": "^10.9.2",
+    "tsx": "^4.0.0",
     "typescript": "^5.3.3"
   }
 }
