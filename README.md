@@ -9,7 +9,41 @@
 | Scraper | ✅ Working |
 | Approach | HTML + API (protected) |
 
+## Architecture
+
+**Redis Queue-Based (Distributed Processing):**
+- Phase 1 (Coordinator): Discovers property IDs from search API, pushes to Redis queue
+- Phase 2 (Workers): Consume IDs, process properties, send to Core Service
+- Supports multiple parallel workers for horizontal scaling
+- Persistent queue survives crashes, fully resumable
+
 ## Quick Start
+
+### Option 1: Redis Queue Architecture (Recommended)
+
+```bash
+# Install dependencies
+npm install
+
+# Start Redis
+docker-compose up -d redis
+
+# Run coordinator to discover properties (run on schedule)
+npm run coordinator
+
+# Start workers to process queue (run multiple for parallel processing)
+npm run worker &
+npm run worker &
+npm run worker &
+
+# Monitor progress
+npm run queue:stats
+
+# Retry failed properties
+npm run queue:retry-failed
+```
+
+### Option 2: Traditional Scraping (Legacy)
 
 ```bash
 # Install dependencies
@@ -73,6 +107,63 @@ https://www.immobilienscout24.de/Suche/de/muenchen/muenchen/wohnung-kaufen
 - May require authentication for some features
 - Rate limiting applies
 - Consider using official API for commercial use
+
+## Redis Queue Architecture
+
+### Overview
+
+Production-grade distributed scraping using Redis queues:
+
+**Phase 1 - Coordinator:**
+- Discovers property IDs from ImmobilienScout24 search API
+- Pushes to Redis queue with global deduplication
+- Runs on schedule (every 6 hours)
+
+**Phase 2 - Workers:**
+- Consume property IDs from queue
+- Process properties (fetch details, transform, send to Core)
+- Support multiple workers for parallel processing
+- Automatic retry with exponential backoff
+
+### Benefits
+
+✅ **Persistence** - Queue survives crashes, no data loss
+✅ **Resumability** - Stop/resume anytime
+✅ **Distributed** - Multiple workers process in parallel
+✅ **Scalability** - Horizontal scaling with worker replicas
+✅ **Observability** - Real-time stats, progress %, ETA
+
+### Commands
+
+```bash
+# Coordinator (discovery)
+npm run coordinator        # Discover all German cities
+
+# Workers (processing)
+npm run worker             # Start worker (run multiple)
+
+# Queue management
+npm run queue:stats        # View statistics
+npm run queue:show-failed  # List failed properties
+npm run queue:retry-failed # Re-queue failed
+npm run queue:clear        # Clear all data
+```
+
+### Docker Deployment
+
+```bash
+# Start full stack
+docker-compose up -d
+
+# Run coordinator (schedule with cron/k8s every 6 hours)
+docker-compose run coordinator
+
+# Workers auto-scale (3 replicas by default)
+docker-compose logs -f worker
+
+# Check stats
+docker-compose run --rm stats
+```
 
 ## Core Service Integration
 
