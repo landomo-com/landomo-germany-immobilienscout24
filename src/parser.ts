@@ -1,4 +1,4 @@
-import { Property } from '@shared/types';
+import { Property } from './types';
 
 /**
  * Extended location interface with postcode support

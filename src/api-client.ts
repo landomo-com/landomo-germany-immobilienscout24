@@ -19,8 +19,8 @@
 
 import axios, { AxiosInstance, AxiosError } from 'axios';
 import * as crypto from 'crypto';
-import { Property, ScraperResult } from '@shared/types';
-import { createLogger } from '@shared/logger';
+import { Property, ScraperResult } from './types';
+import { createLogger } from './logger';
 
 const logger = createLogger('IS24ApiClient');
 
