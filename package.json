@@ -1,0 +1,29 @@
+{
+  "name": "@landomo/scraper-germany-immobilienscout24",
+  "version": "1.0.0",
+  "description": "Scraper for ImmobilienScout24 (Germany/Austria) using the mobile API",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "scrape": "ts-node src/index.ts"
+  },
+  "keywords": [
+    "scraper",
+    "real-estate",
+    "germany",
+    "austria",
+    "immobilienscout24"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
