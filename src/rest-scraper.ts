@@ -7,7 +7,7 @@
  * Performance target: 5000 listings in < 5 minutes
  */
 
-import { Property, ScraperResult } from './types';
+import { Property, ScraperResult } from '@shared/types';
 import {
   IS24RestApiClient,
   IS24ApiSearchParams,
@@ -15,7 +15,7 @@ import {
   buildSpaceRange,
   buildRoomsRange
 } from './api-client';
-import { createLogger } from './logger';
+import { createLogger } from '@shared/logger';
 
 const logger = createLogger('IS24RestScraper');
 

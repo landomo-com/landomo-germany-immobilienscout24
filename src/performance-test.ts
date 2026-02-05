@@ -12,8 +12,8 @@
 
 import { IS24RestScraper, RestScraperOptions } from './rest-scraper';
 import { normalizeGermanProperties } from './german-normalizer';
-import { Property, ScraperResult } from './types';
-import { createLogger } from './logger';
+import { Property, ScraperResult } from '@shared/types';
+import { createLogger } from '@shared/logger';
 import * as fs from 'fs';
 import * as path from 'path';
 

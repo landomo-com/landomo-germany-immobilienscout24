@@ -12,10 +12,10 @@
 
 import { RestScraperOptions, IS24RestScraper } from './rest-scraper';
 import { normalizeGermanProperties } from './german-normalizer';
-import { Property, ScraperResult } from './types';
+import { Property, ScraperResult } from '@shared/types';
 import * as fs from 'fs';
 import * as path from 'path';
-import { createLogger } from './logger';
+import { createLogger } from '@shared/logger';
 
 const logger = createLogger('module');
 

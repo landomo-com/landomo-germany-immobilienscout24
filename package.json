@@ -1,40 +1,32 @@
 {
   "name": "@landomo/scraper-germany-immobilienscout24",
-  "version": "1.0.0",
-  "description": "Scraper for ImmobilienScout24 (Germany/Austria) using the mobile API",
-  "main": "dist/index.js",
+  "version": "2.0.0",
+  "description": "ImmobilienScout24 scraper for German real estate - Phase 2 architecture with dual API support",
+  "main": "dist/worker.js",
+  "type": "module",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "ts-node src/index.ts",
-    "scrape": "ts-node src/index.ts",
-    "example": "ts-node src/example-core-integration.ts",
     "coordinator": "tsx src/coordinator.ts",
     "worker": "tsx src/worker.ts",
-    "queue:stats": "tsx src/queue-stats.ts stats",
-    "queue:clear": "tsx src/queue-stats.ts clear",
-    "queue:retry-failed": "tsx src/queue-stats.ts retry-failed",
-    "queue:show-failed": "tsx src/queue-stats.ts show-failed"
+    "queue:stats": "tsx src/queue-stats.ts",
+    "test": "npm run build"
   },
   "keywords": [
     "scraper",
     "real-estate",
     "germany",
-    "austria",
-    "immobilienscout24"
+    "immobilienscout24",
+    "landomo"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Landomo",
+  "license": "UNLICENSED",
   "dependencies": {
-    "@types/ioredis": "^4.28.10",
-    "axios": "^1.6.5",
-    "dotenv": "^16.0.0",
-    "ioredis": "^5.9.2"
+    "axios": "^1.6.0",
+    "ioredis": "^5.3.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
-    "ts-node": "^10.9.2",
-    "tsx": "^4.0.0",
-    "typescript": "^5.3.3"
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
   }
 }

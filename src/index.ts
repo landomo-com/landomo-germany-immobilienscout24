@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 import { ImmobilienScout24Scraper, IS24ScraperOptions, GEOCODES } from './scraper';
-import { Property, ScraperResult } from './types';
+import { Property, ScraperResult } from '@shared/types';
 import * as fs from 'fs';
 import * as path from 'path';
-import { createLogger } from './logger';
+import { createLogger } from '@shared/logger';
 
 const logger = createLogger('module');
 
