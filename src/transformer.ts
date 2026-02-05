@@ -2,7 +2,7 @@
  * Transform ImmobilienScout24 data to StandardProperty format
  */
 
-import { Property } from './types';
+import { Property } from './shared-types';
 
 /**
  * StandardProperty interface (from @landomo/core)
@@ -265,7 +265,7 @@ function buildCountrySpecific(raw: Property): Record<string, any> {
   const specific: Record<string, any> = {};
 
   // Extract energy efficiency class
-  const energyFeature = raw.features.find(f => f.toLowerCase().includes('energy-class'));
+  const energyFeature = raw.features.find((f: string) => f.toLowerCase().includes('energy-class'));
   if (energyFeature) {
     const match = energyFeature.match(/energy-class-([a-h]\+?)/i);
     if (match) {
@@ -274,14 +274,14 @@ function buildCountrySpecific(raw: Property): Record<string, any> {
   }
 
   // Extract heating type
-  const heatingFeature = raw.features.find(f => f.toLowerCase().includes('heating-'));
+  const heatingFeature = raw.features.find((f: string) => f.toLowerCase().includes('heating-'));
   if (heatingFeature) {
     const heatingType = heatingFeature.replace(/^heating-/i, '');
     specific.heizungsart = heatingType;
   }
 
   // Extract condition
-  const conditionFeature = raw.features.find(f => f.toLowerCase().includes('condition-'));
+  const conditionFeature = raw.features.find((f: string) => f.toLowerCase().includes('condition-'));
   if (conditionFeature) {
     const condition = conditionFeature.replace(/^condition-/i, '');
     specific.zustand = condition;
@@ -308,7 +308,7 @@ function buildCountrySpecific(raw: Property): Record<string, any> {
   }
 
   // Extract parking type from features
-  const parkingFeature = raw.features.find(f => f.toLowerCase().includes('parking-'));
+  const parkingFeature = raw.features.find((f: string) => f.toLowerCase().includes('parking-'));
   if (parkingFeature) {
     const parkingType = parkingFeature.replace(/^parking-/i, '');
     specific.stellplatz_typ = parkingType;

@@ -6,7 +6,7 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
 import { config } from './config';
 import { StandardProperty } from './transformer';
-import { Property } from './types';
+import { Property } from './shared-types';
 import { createLogger } from './logger';
 
 const logger = createLogger('CoreServiceClient');

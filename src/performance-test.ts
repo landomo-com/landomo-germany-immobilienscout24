@@ -12,8 +12,8 @@
 
 import { IS24RestScraper, RestScraperOptions } from './rest-scraper';
 import { normalizeGermanProperties } from './german-normalizer';
-import { Property, ScraperResult } from '@shared/types';
-import { createLogger } from '@shared/logger';
+import { Property, ScraperResult } from './shared-types';
+import { createLogger } from './logger';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -181,12 +181,14 @@ class PerformanceTester {
     const properties: Property[] = [];
     for (let i = 0; i < 1000; i++) {
       properties.push({
-        id: `${i}`,
+        id: `is24-${i}`,
+        source: 'immobilienscout24',
         title: `Wohnung ${i}`,
         price: 1500 + Math.random() * 1000,
         currency: 'EUR',
         propertyType: 'apartment' as const,
         transactionType: 'rent' as const,
+        url: `https://www.immobilienscout24.de/expose/${i}`,
         location: {
           city: 'Berlin',
           region: 'Friedrichshain-Kreuzberg',
@@ -204,7 +206,6 @@ class PerformanceTester {
         features: ['balcony', 'cellar'],
         images: [],
         agent: undefined,
-        url: `https://example.com/${i}`,
         scrapedAt: new Date().toISOString()
       });
     }

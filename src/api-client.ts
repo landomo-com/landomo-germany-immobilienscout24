@@ -19,8 +19,8 @@
 
 import axios, { AxiosInstance, AxiosError } from 'axios';
 import * as crypto from 'crypto';
-import { Property, ScraperResult } from '@shared/types';
-import { createLogger } from '@shared/logger';
+import { Property, ScraperResult } from './shared-types';
+import { createLogger } from './logger';
 
 const logger = createLogger('IS24ApiClient');
 
@@ -485,6 +485,7 @@ export class IS24RestApiClient {
       // Build property object
       const property: Property = {
         id,
+        source: 'immobilienscout24',
         title,
         price,
         currency,
@@ -512,7 +513,7 @@ export class IS24RestApiClient {
         features,
         images,
         agent: agencyName ? {
-          name: agentName,
+          name: agentName || 'Agent',
           phone: agentPhone,
           email: agentEmail,
           agency: agencyName,

@@ -11,8 +11,8 @@
  * - Complex feature extraction
  */
 
-import { Property } from '@shared/types';
-import { createLogger } from '@shared/logger';
+import { Property } from './shared-types';
+import { createLogger } from './logger';
 
 const logger = createLogger('GermanNormalizer');
 

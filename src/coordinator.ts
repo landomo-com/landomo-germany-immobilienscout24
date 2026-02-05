@@ -42,10 +42,6 @@ export class ImmobilienScout24Coordinator {
   async initialize() {
     await this.queue.initialize();
 
-    // Set start time
-    const now = new Date().toISOString();
-    await this.queue.setStartTime(now);
-
     logger.info('Coordinator initialized');
   }
 

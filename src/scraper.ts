@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
-import { Property, ScraperConfig, ScraperResult } from '@shared/types';
-import { createLogger } from '@shared/logger';
+import { Property, ScraperConfig, ScraperResult } from './shared-types';
+import { createLogger } from './logger';
 import {
   MobileSearchResponse,
   MobileExposeResponse,

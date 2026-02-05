@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 import { ImmobilienScout24Scraper, IS24ScraperOptions, GEOCODES } from './scraper';
-import { Property, ScraperResult } from '@shared/types';
+import { Property, ScraperResult } from './shared-types';
 import * as fs from 'fs';
 import * as path from 'path';
-import { createLogger } from '@shared/logger';
+import { createLogger } from './logger';
 
 const logger = createLogger('module');
 
@@ -173,11 +173,11 @@ function propertiesToCsv(properties: Property[]): string {
     p.location.country,
     p.location.coordinates?.lat || '',
     p.location.coordinates?.lon || '',
-    p.details.sqm || '',
-    p.details.bedrooms || '',
-    p.details.bathrooms || '',
-    p.details.rooms || '',
-    p.details.floor || '',
+    p.details?.sqm || '',
+    p.details?.bedrooms || '',
+    p.details?.bathrooms || '',
+    p.details?.rooms || '',
+    p.details?.floor || '',
     `"${p.features.join('; ')}"`,
     `"${(p.agent?.agency || '').replace(/"/g, '""')}"`,
     p.url,
@@ -281,7 +281,7 @@ async function main(): Promise<void> {
         logger.info(`  - ${prop.title}`);
         logger.info(`    Price: ${prop.price} ${prop.currency} (${prop.transactionType})`);
         logger.info(`    Location: ${prop.location.city}, ${prop.location.country}`);
-        logger.info(`    Size: ${prop.details.sqm || '?'} sqm, ${prop.details.rooms || '?'} rooms`);
+        logger.info(`    Size: ${prop.details?.sqm || '?'} sqm, ${prop.details?.rooms || '?'} rooms`);
         logger.info(`    URL: ${prop.url}`);
         logger.info('');
       }
